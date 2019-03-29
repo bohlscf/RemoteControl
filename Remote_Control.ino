@@ -30,16 +30,10 @@ void setup() {
 //-----------------------------------------------------------------------------------------------------
 void loop() {
   
-  digitalWrite(green, LOW);
-  digitalWrite(red, LOW);
+  digitalWrite(green, LOW); //Green represents the high value on rc-5 protocol
+  digitalWrite(red, LOW);   //Red represents the low value on rc-5 protocol
     
-  char customKey = myKeypad.getKey(); //defining the key that was pressed
-  //delay(50);
-  //char nextKey = myKeypad.getKey();  this might be needed to work with toggle
-  
-  //Serial.println("1st key = " + customKey);
-  //Serial.println("2nd key = " + nextKey);
-  
+  char customKey = myKeypad.getKey();
   
   if(customKey == '1') {  // (command 1, address 0)
     task(1); //s1
@@ -112,12 +106,13 @@ void loop() {
 }
 
 void task(int command){
-    digitalWrite(yellow, HIGH);
+    digitalWrite(yellow, HIGH); //Yellow shows the start of each bit
     digitalWrite(red, LOW);
     digitalWrite(green, LOW);
     delay(200);
     digitalWrite(yellow, LOW);
-    if(command == 1){
+    
+    if(command == 1){           // 1: goes from low to high
       digitalWrite(green, LOW);
       digitalWrite(red, HIGH);
       delay(500);
@@ -125,7 +120,7 @@ void task(int command){
       digitalWrite(red, LOW);
       delay(500);
     }
-    else{
+    else{                      // 0: goes from high to low
       digitalWrite(green, HIGH);
       digitalWrite(red, LOW);
       delay(500);
@@ -133,7 +128,4 @@ void task(int command){
       digitalWrite(red, HIGH);
       delay(500);
     }
-    digitalWrite(yellow, HIGH);
-    delay(100);
-    digitalWrite(yellow, LOW);
 }
